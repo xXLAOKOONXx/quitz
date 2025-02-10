@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Game</title>
+</head>
+<body>
+    <h1>Select a Quiztable</h1>
+    <form action="/start-game" method="post">
+        {% csrf_token %}
+        <select name="quiztable">
+            {% for quiztable in quiztables %}
+                <option value="{{ quiztable }}">{{ quiztable }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Start Game</button>
+    </form>
+</body>
+</html>

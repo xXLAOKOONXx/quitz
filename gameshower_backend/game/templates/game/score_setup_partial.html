@@ -1,0 +1,33 @@
+<div id="score_wrap" hx-swap="innerHTML" class="score-wrap">
+  {% for player in participants %}
+    <div id="player-{{ player.id }}-score-wrap" class="player-score-wrap">
+      <div id="player-{{ player.id }}-name" hx-swap="innerHTML" class="player-score-name">{{ player.name }}</div>
+      <div id="player-{{ player.id }}-score" hx-swap="innerHTML" class="player-score-value">{{ player.score }}</div>
+    </div>
+  {% endfor %}
+  <style>
+    .score-wrap {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px;
+      flex-direction: row;
+    }
+    .player-score-wrap {
+      border: 2px solid var(--black);
+    }
+
+    .player-score-name {
+      background-color: var(--gray-400);
+      font-size: 1.5rem;
+      border-bottom: 0.5px solid var(--black);
+      padding: 3px 10px 3px 10px;
+      align-content: center;
+    }
+
+    .player-score-value {
+      font-size: 1rem;
+      padding: 3px 10px 3px 10px;
+      align-content: center;
+    }
+  </style>
+</div>

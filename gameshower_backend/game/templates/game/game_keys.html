@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<div>
+  <div>
+    <div>Moderator Key</div>
+    <div>{{ moderator_key }}</div>
+  </div>
+  <div>
+    <div>Spectator Key</div>
+    <div>{{ spectator_key }}</div>
+  </div>
+  {% for player in participants %}
+    <div>
+      <div>{{ player.name }}</div>
+      <div>{{ player.private_key }}</div>
+    </div>
+  {% endfor %}
+</div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{% extends "bases/base.html" %}
+{% block page_body %}
+  <div id="htmx_wrap" hx-ext="ws" ws-connect="/ws/player/" hx-swap="innerHTML">    
+    <div id="page_content" class="container">
+      Loading...
+    </div>
+    <div id="score_wrap" hx-swap="innerHTML"></div>
+  </div>
+{% endblock %}

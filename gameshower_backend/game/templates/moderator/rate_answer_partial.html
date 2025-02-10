@@ -1,0 +1,10 @@
+<div id="rate_answer_wrap" hx-swap="innerHTML">
+  <div class="box">
+    <h2>Rate the answer</h2>
+    <div id="rate_answer_buttons">
+      <button hx-ext="ws" ws-send hx-vals='{"type":"rate-answer", "value":"true"}' class="btn btn-green">true</button>
+      <button hx-ext="ws" ws-send hx-vals='{"type":"rate-answer", "value":"false"}' class="btn btn-red">false</button>
+      <button hx-ext="ws" ws-send hx-vals='{"type":"rate-answer", "value":"skip"}' class="btn btn-blue">skip</button>
+    </div>
+  </div>
+</div>

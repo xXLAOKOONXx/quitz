@@ -1,0 +1,14 @@
+<div id="buzzer_wrap" hx-swap="innerHTML">
+  <div id="buzzer_button_wrap">
+    <button id="buzzer_button" hx-ext="ws" ws-send hx-vals='{"type":"buzzer-click"}' class="btn btn-primary" {% if disabled %}disabled{% endif %}>Buzz</button>
+  </div>
+  <style>
+    #buzzer_button {
+      background-color: var(--green-500);
+    }
+
+    #buzzer_button:disabled {
+      background-color: var(--red-500);
+    }
+  </style>
+</div>

@@ -1,0 +1,15 @@
+<div id="page_content" hx-swap="innerHTML">
+  <div id="question_wrap" hx-swap="innerHTML"></div>
+  <div id="answer_wrap" hx-swap="innerHTML"></div>
+  <div class="vertical-order">
+    <div id="timer_wrap" hx-swap="innerHTML"></div>
+    {% include "moderator/timer_buttons_wrap.html" %}
+  </div>
+  <div class="horizontal-order">
+    <div id="buzzer_wrap" hx-swap="innerHTML"></div>
+    <div id="rate_answer_wrap" hx-swap="innerHTML"></div>
+  </div>
+  <div>
+    <button hx-ext="ws" ws-send hx-vals='{"type":"exit-question"}' class="btn btn-primary">Exit Question</button>
+  </div>
+</div>

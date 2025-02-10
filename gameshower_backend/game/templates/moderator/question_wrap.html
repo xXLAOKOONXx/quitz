@@ -1,0 +1,15 @@
+<div id="question_wrap" hx-swap="innerHTML">
+  {% load static %}
+  <div id="question_content" class="box horizontal-order">
+    <div id="question_text">
+      <p>{{ question_text }}</p>
+    </div>
+    <button hx-ext="ws" ws-send hx-vals='{"type":"show-question-click"}' class="btn" style="margin-left: 5px;">
+    {% if question_visible %}
+      <img class="eye-icon" src="{% static 'icons/eye.svg' %}" alt="visible">
+    {% else %}
+      <img class="eye-slash-icon" src="{% static 'icons/eye-slash.svg' %}" alt="invisible">
+    {% endif %}
+    </button>
+  </div>
+</div>

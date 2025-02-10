@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Shower</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
+<body>
+    <h1>Game Shower</h1>
+    <div id="game-container">
+        <button id="start-game" hx-get="/start-game" hx-swap="outerHTML">Start Game</button>
+    </div>
+    <script>
+        const socket = new WebSocket('ws://localhost:8000/ws/game/');
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log('Message from server:', data.message);
+        };
+    </script>
+</body>
+</html>

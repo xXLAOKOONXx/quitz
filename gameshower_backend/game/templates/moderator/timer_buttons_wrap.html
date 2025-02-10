@@ -1,0 +1,28 @@
+<div id="timer_buttons_wrap" hx-swap="innerHTML">
+  <button id="timer_button" hx-ext="ws" ws-send hx-vals='{"type":"timer-update", "count":"30"}' class="btn btn-primary" style="display: none;">Start Timer</button>
+  <input type="number" id="timer_input" value="30" min="1">
+  <button id="async_button" class="btn">Start Timer</button>
+  <button id="stop_button" class="btn" style="display: none;">Stop Timer</button>
+  <script>
+    let timer_intervalId;
+    document.getElementById('async_button').addEventListener('click', function() {
+      let count = parseInt(document.getElementById('timer_input').value);
+      document.getElementById('stop_button').style.display = 'block';
+      timer_intervalId = setInterval(() => {
+        if (count < 0) {
+          clearInterval(timer_intervalId);
+          document.getElementById('stop_button').style.display = 'none';
+        } else {
+          const message = JSON.stringify({ type: 'timer-update', count: count });
+          document.getElementById('timer_button').setAttribute('hx-vals', JSON.stringify({ type: 'timer-update', count: count }));
+          htmx.trigger(htmx.find('#timer_button'), 'click', { detail: { message: message } });
+          count--;
+        }
+      }, 1000);
+    });
+    document.getElementById('stop_button').addEventListener('click', function() {
+      clearInterval(timer_intervalId);
+      document.getElementById('stop_button').style.display = 'none';
+    });
+  </script>
+</div>

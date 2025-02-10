@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Game</title>
+</head>
+<body>
+  <script>
+    const mod_socket = new WebSocket('/ws/admin/');
+  </script>
+  <div>
+    <form>
+      <label for="gameName">Game Name:</label>
+      <input type="text" id="gameName" name="gameName" required>
+      <br>
+      <div id="players">
+        <label for="player1">Player 1:</label>
+        <input type="text" id="player1" name="players[]" required>
+      </div>
+      <button type="button" onclick="addPlayer()">Add Player</button>
+      <br>
+      <button type="submit">Create Game</button>
+
+      <script>
+        let playerCount = 1;
+
+        function addPlayer() {
+          playerCount++;
+          const playersDiv = document.getElementById('players');
+          const newPlayerLabel = document.createElement('label');
+          newPlayerLabel.setAttribute('for', 'player' + playerCount);
+          newPlayerLabel.textContent = 'Player ' + playerCount + ':';
+          const newPlayerInput = document.createElement('input');
+          newPlayerInput.setAttribute('type', 'text');
+          newPlayerInput.setAttribute('id', 'player' + playerCount);
+          newPlayerInput.setAttribute('name', 'players[]');
+          newPlayerInput.required = true;
+          playersDiv.appendChild(document.createElement('br'));
+          playersDiv.appendChild(newPlayerLabel);
+          playersDiv.appendChild(newPlayerInput);
+        }
+
+        document.querySelector('form').onsubmit = function(event) {
+          event.preventDefault();
+          const game_name = document.getElementById('gameName').value;
+          const player_names = Array.from(document.querySelectorAll('input[name="players[]"]')).map(input => input.value);
+          mod_socket.send(JSON.stringify({ game_name, player_names, type: 'create-game' }));
+        };
+      </script>
+    </form>
+  </div>
+</body>
+</html>

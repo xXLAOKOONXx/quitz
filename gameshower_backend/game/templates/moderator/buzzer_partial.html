@@ -1,0 +1,50 @@
+<div id="buzzer_wrap" hx-swap="innerHTML" class="box">
+  {% load static %}
+  <div class="player_buzzer_buttons_wrap">
+    {% for player in participants %}
+      <div class="buzzer_button_wrap">
+        <button class="buzzer-button {% if player.round_lock %}locked-buzzer{% endif %} {% if player.id == buzz_player_id %}buzzed{% endif %}" hx-ext="ws" ws-send hx-vals='{"type":"player-buzzer-lock", "player_id":"{{ player.id }}"}'>
+          {{ player.name }} 
+          {% if player.round_lock %}
+            <img class="lock-icon" src="{% static 'icons/lock-fill.svg' %}" alt="Locked">
+          {% endif %}
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="all_buzzers_wrap">
+    <button class="buzzer-button {% if buzzers_locked %}locked-buzzers{% else %}unlocked-buzzers{% endif %}" hx-ext="ws" ws-send hx-vals='{"type":"toggle-all-buzzers"}'>
+      {% if buzzers_locked %}
+        <img class="lock-icon" src="{% static 'icons/lock-fill.svg' %}" alt="Locked">
+      {% else %}
+        <img class="unlock-icon" src="{% static 'icons/unlock-fill.svg' %}" alt="Locked">
+      {% endif %}
+    </button>
+  </div>
+  <style>
+    .player_buzzer_buttons_wrap {
+      border-right: 1px solid var(--gray-300);
+    }
+    #buzzer_wrap {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    .buzzer-button {
+      padding: 0.5rem 1rem;
+      font-size: 1.5rem;
+      background-color: var(--blue-500);
+      color: var(--white);
+      cursor: pointer;
+      border-width: 3px;
+      border-color:transparent;
+      border-radius: 0;
+      border-style: solid;
+      margin: 5px;
+    }
+    .buzzer-button.buzzed {
+      border-color: green;
+    }
+  </style>
+</div>

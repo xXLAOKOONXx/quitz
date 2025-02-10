@@ -1,0 +1,15 @@
+<div id="answer_wrap" hx-swap="innerHTML">
+  {% load static %}
+  <div id="answer_content" class="box horizontal-order">
+    <div id="answer_text" class="box">
+      <p>{{ answer_text }}</p>
+    </div>
+    <button hx-ext="ws" ws-send hx-vals='{"type":"show-answer-click"}' class="btn" style="margin-left: 5px;">
+    {% if answer_visible %}
+      <img class="eye-icon" src="{% static 'icons/eye.svg' %}" alt="visible">
+    {% else %}
+      <img class="eye-slash-icon" src="{% static 'icons/eye-slash.svg' %}" alt="invisible">
+    {% endif %}
+    </button>
+  </div>
+</div>
