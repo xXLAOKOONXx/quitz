@@ -2,6 +2,10 @@
 
 This is a Quiz Game providing a webserver and web pages for a digital quiz experience. You can create your own Quiz, use the webserver for players to buzzer, keep score and show the questions in a fancy way.
 
+## DISCLAIMER
+
+This project is in an early stage, handle it with caution.
+
 ## Start Up
 
 You need to install `poetry` to use the python environment of this project.

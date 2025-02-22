@@ -1,0 +1,28 @@
+<div id="game-create">
+  <div class="box">
+    <h1>Create Game</h1>
+    <form hx-post="/api/create-game" hx-target="#game-create" hx-swap="outerHTML">
+      <label for="game-name">Game Name:</label>
+      <input type="text" id="game-name" name="game-name" required>
+
+      <h2>Quiz tables</h2>
+      <div id="quiz-tables-wrapper">
+        <!-- Content will be dynamically loaded here -->
+      </div>
+      <button hx-get="/api/add-quiz-table" hx-target="#quiz-tables-wrapper" hx-swap="beforeend">
+        Add Quiz Table
+      </button>
+      <br>
+      {% csrf_token %}
+      <button type="submit">
+        Create Game
+      </button>
+    </form>
+  </div>
+  {% if game_name %}
+  <div class="box">
+    <p>Game created: {{ game_name }}</p>
+    <p>Game ID: {{ game_id }}</p>
+  </div>
+  {% endif %}
+</div>

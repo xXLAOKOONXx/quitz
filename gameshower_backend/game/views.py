@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import json
 import os
-from .models import Game
+from .models import Game, JepardyTable
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 def admin_required(view_func):
@@ -49,3 +49,20 @@ def game_keys_page(request, game_id):
         ]
     }
     return render(request, 'game/game_keys.html', context=context)
+
+@admin_required
+def create_game_page(request):
+    return render(request, 'creation/game_page.html')
+
+@admin_required
+def add_quiz_table(request):
+    quiz_tables = JepardyTable.objects.all()
+    context = {
+        'quiz_tables': [
+            {
+                'id': table.id,
+                'name': table.name,
+            } for table in quiz_tables
+        ]
+    }
+    return render(request, 'creation/quiz_table_page.html', context=context)

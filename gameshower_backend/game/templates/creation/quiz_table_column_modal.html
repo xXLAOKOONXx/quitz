@@ -1,0 +1,12 @@
+<div id="column-modal-wrapper">
+  <div id="column-modal" class="modal" style="display: block;">
+    <div class="modal-content">
+      <span class="close-button" onclick="document.getElementById('column-modal').style.display='none'">&times;</span>
+      <form hx-post="/your-post-endpoint" hx-target="#column-modal-wrapper">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

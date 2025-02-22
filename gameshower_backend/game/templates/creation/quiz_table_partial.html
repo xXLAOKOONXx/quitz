@@ -1,0 +1,13 @@
+<div id="quiz-table-partial" hx-swap="innerHTML">
+  <form hx-post="/api/update-quiz-table" hx-target="#quiz-table-partial" hx-swap="outerHTML">
+    <label for="quiz-table-name">Quiz Table Name:</label>
+    <input type="text" id="quiz-table-name" name="quiz-table-name" required>
+    {% for column in columns %}
+    <button >{{ column.name }}</button>
+    {% endfor %}
+    {% csrf_token %}
+    <button type="submit">Update Quiz Table</button>
+  </form>
+  <div id="column-modal-wrapper">
+  </div>
+</div>

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, htmx_apis
 
 urlpatterns = [
     path('', views.welcome_page, name='welcome_page'),
@@ -9,4 +9,9 @@ urlpatterns = [
     path('player', views.player_page, name='player_page'),
     path('game_keys/<int:game_id>/', views.game_keys_page, name='game_keys'),
     path('moderator', views.moderator_page, name='moderator_page'),
+    path('create-game-page', views.create_game_page, name='create_game_page'),
+    path('quiz-tables', views.add_quiz_table, name='add_quiz_table'),
+    path('api/add-quiz-table', htmx_apis.add_quiz_table, name='add_quiz_table'),
+    path('api/create-game', htmx_apis.create_game, name='api_create_game'),
+    path('api/load-quiz-table', htmx_apis.laod_quiz_table, name='load_quiz_table'),
 ]

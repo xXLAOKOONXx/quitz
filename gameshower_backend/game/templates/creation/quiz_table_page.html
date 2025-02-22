@@ -1,0 +1,20 @@
+{% extends "bases/base.html" %}
+{% block page_body %}
+  <div>
+    <div>
+      <form hx-post="/api/load-quiz-table" hx-target="#quiz-table-edit-wrapper" hx-swap="outerHTML">
+        <label for="quiz-table-name">Quiz Table:</label>
+        <select id="quiz-table-select" name="quiz-table" required>
+          <option value="">Select Quiz Table</option>
+          {% for quiz_table in quiz_tables %}
+          <option value="{{ quiz_table.id }}">{{ quiz_table.name }}</option>
+          {% endfor %}
+        </select>
+        {% csrf_token %}
+        <button type="submit">Refresh</button>
+    </div>
+    <div id="quiz-table-edit-wrapper" hx-swap="innerHTML">
+
+    </div>
+  </div>
+{% endblock %}

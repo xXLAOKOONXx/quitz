@@ -1,0 +1,14 @@
+<div id="quiz-tables-wrapper">
+  <div>
+  <div class="form-group">
+    <select name="selected-quiz-table" required>
+      <option value="create">Create New</option>
+      {% for quiz_table in quiz_tables %}
+      <option value="{{ quiz_table.id }}">{{ quiz_table.name }}</option>
+      {% endfor %}
+    </select>
+    <label for="new-quiz-table-name">Quiz Table Name:</label>
+    <input type="text" name="new-quiz-table-name">
+  </div>
+
+</div>
