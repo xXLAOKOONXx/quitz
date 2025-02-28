@@ -30,10 +30,11 @@ def create_game(request: HttpRequest):
     game.save()
     return render(request, 'creation/game_page.html', context={'game_id': game.id, 'game_name': game_name})
 
-def laod_quiz_table(request):
+def laod_quiz_table(request: HttpRequest):
     p = request.POST
-    quiz_table_id = p['quiz_table_id']
+    print(f'p: {p}')
+    quiz_table_id = p.get('quiz-table')
     quiz_table = JepardyTable.objects.get(id=quiz_table_id)
     
-    return 'Hello World'
+    return render(request, 'creation/quiz_table_partial.html', context={'quiz_table': quiz_table})
     

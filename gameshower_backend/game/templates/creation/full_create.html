@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Game</title>
+    <script>
+        function addColumn(tableIndex) {
+            const columnsDiv = document.getElementById(`columns-${tableIndex}`);
+            const columnIndex = columnsDiv.children.length;
+            const columnHtml = `
+                <div id="column-${tableIndex}-${columnIndex}">
+                    <label>Column Name:</label>
+                    <input type="text" name="tables[${tableIndex}][columns][${columnIndex}][name]" required>
+                    <div id="questions-${tableIndex}-${columnIndex}">
+                        <button type="button" onclick="addQuestion(${tableIndex}, ${columnIndex})">Add Question</button>
+                    </div>
+                </div>
+            `;
+            columnsDiv.insertAdjacentHTML('beforeend', columnHtml);
+        }
+
+        function addQuestion(tableIndex, columnIndex) {
+            const questionsDiv = document.getElementById(`questions-${tableIndex}-${columnIndex}`);
+            const questionIndex = questionsDiv.children.length - 1;
+            const questionHtml = `
+                <div id="question-${tableIndex}-${columnIndex}-${questionIndex}">
+                    <label>Question:</label>
+                    <input type="text" name="tables[${tableIndex}][columns][${columnIndex}][questions][${questionIndex}][question]" required>
+                    <label>Answer:</label>
+                    <input type="text" name="tables[${tableIndex}][columns][${columnIndex}][questions][${questionIndex}][answer]" required>
+                    <label>Points:</label>
+                    <input type="number" name="tables[${tableIndex}][columns][${columnIndex}][questions][${questionIndex}][points]" required>
+                </div>
+            `;
+            questionsDiv.insertAdjacentHTML('beforeend', questionHtml);
+        }
+
+        function addTable() {
+            const tablesDiv = document.getElementById('tables');
+            const tableIndex = tablesDiv.children.length;
+            const tableHtml = `
+                <div id="table-${tableIndex}">
+                    <label>Table Name:</label>
+                    <input type="text" name="tables[${tableIndex}][name]" required>
+                    <div id="columns-${tableIndex}">
+                        <button type="button" onclick="addColumn(${tableIndex})">Add Column</button>
+                    </div>
+                </div>
+            `;
+            tablesDiv.insertAdjacentHTML('beforeend', tableHtml);
+        }
+
+        function addParticipant() {
+            const participantsDiv = document.getElementById('participants');
+            const participantIndex = participantsDiv.children.length;
+            const participantHtml = `
+                <div id="participant-${participantIndex}">
+                    <label>Participant Name:</label>
+                    <input type="text" name="participants[${participantIndex}][name]" required>
+                </div>
+            `;
+            participantsDiv.insertAdjacentHTML('beforeend', participantHtml);
+        }
+
+        function getNestedFormData(form) {
+            const formData = new FormData(form);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                const keys = key.split('[').map(k => k.replace(']', ''));
+                keys.reduce((acc, k, i) => {
+                    if (i === keys.length - 1) {
+                        acc[k] = value;
+                    } else {
+                        acc[k] = acc[k] || {};
+                    }
+                    return acc[k];
+                }, jsonData);
+            });
+            return jsonData;
+        }
+
+        async function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const jsonData = getNestedFormData(form);
+            const response = await fetch('/api/create-full-game/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': jsonData.csrfmiddlewaretoken
+                },
+                body: JSON.stringify(jsonData)
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert(`Game created successfully with ID: ${result.game_id}`);
+            } else {
+                alert(`Error: ${result.error}`);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Create Game</h1>
+    <form id="create-game-form" onsubmit="submitForm(event)">
+        {% csrf_token %}
+        <label>Game Name:</label>
+        <input type="text" name="name" required>
+        <div id="tables">
+            <button type="button" onclick="addTable()">Add Table</button>
+        </div>
+        <div id="participants">
+            <button type="button" onclick="addParticipant()">Add Participant</button>
+        </div>
+        <button type="submit">Create Game</button>
+    </form>
+</body>
+</html>

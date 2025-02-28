@@ -55,6 +55,10 @@ def create_game_page(request):
     return render(request, 'creation/game_page.html')
 
 @admin_required
+def create_full_game(request):
+    return render(request, 'creation/full_create.html')
+
+@admin_required
 def add_quiz_table(request):
     quiz_tables = JepardyTable.objects.all()
     context = {
