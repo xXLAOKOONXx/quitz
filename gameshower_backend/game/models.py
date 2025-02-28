@@ -13,8 +13,8 @@ class GameQuestion(models.Model):
 class JepardyQuestion(models.Model):
     question = models.ForeignKey(GameQuestion, on_delete=models.CASCADE)
     points = models.IntegerField()
-    is_played = models.BooleanField()
-    is_active = models.BooleanField()
+    is_played = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
 class JepardyColumn(models.Model):
     name = models.CharField(max_length=100)
@@ -36,7 +36,7 @@ class CurrentView(models.Model):
 class Game(models.Model):
     name = models.CharField(max_length=100)
     jepardytables = models.ManyToManyField(JepardyTable, related_name='game')
-    current_view = models.ForeignKey(CurrentView, on_delete=models.CASCADE, null=True, blank=True)
+    current_view = models.ForeignKey(CurrentView, on_delete=models.CASCADE, default=CurrentView.objects.create)
     moderator_key = models.CharField(max_length=100, default=generate_private_key, null=True) # TODO: Should be unique
     spectator_key = models.CharField(max_length=100, default=generate_private_key, null=True) # TODO: Should be unique
     buzzers_locked = models.BooleanField(default=True)
